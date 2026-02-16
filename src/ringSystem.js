@@ -36,7 +36,7 @@ export class RingSystem {
         // We want it to cover the face significant area.
         // Face width in 3D (normalized roughly) is maybe 1 unit wide?
         // Let's make it 4.6875 units wide (3.125 * 1.5) to cover "entire face" and more.
-        const width = 5;
+        const width = 7;
         const height = width * (16 / 9); // 9:16 aspect ratio
 
         const geometry = new THREE.PlaneGeometry(width, height);
