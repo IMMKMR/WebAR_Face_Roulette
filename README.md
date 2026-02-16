@@ -21,7 +21,7 @@ Since this project uses ES Modules and camera access, it requires a local server
    ```sh
    npx serve .
    ```
-3. Open `http://localhost:3000/public` in your browser.
+3. Open `http://localhost:3000` in your browser.
    (Note: Camera access requires `localhost` or `https`)
 
 ### Option 2: Using Python
@@ -29,7 +29,7 @@ Since this project uses ES Modules and camera access, it requires a local server
    ```sh
    python -m http.server
    ```
-2. Open `http://localhost:8000/public`
+2. Open `http://localhost:8000`
 
 ## 📱 Mobile Testing
 To test on mobile, you need HTTPS or port forwarding (since camera is blocked on insecure HTTP over LAN).
@@ -37,6 +37,7 @@ To test on mobile, you need HTTPS or port forwarding (since camera is blocked on
 - Open the generated https URL on your phone.
 
 ## 📂 Structure
-- `public/`: HTML, CSS, and entry point.
+- `index.html`: Main HTML entry point.
+- `style.css`: Main stylesheet.
 - `src/`: JavaScript modules (FaceTracker, RingSystem, etc).
 - `assets/`: Image assets (SVGs).
