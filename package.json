@@ -1,0 +1,16 @@
+{
+  "name": "webar-face-roulette",
+  "version": "1.0.0",
+  "description": "WebAR Face Roulette application using MediaPipe and Three.js",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "keywords": [
+    "webar",
+    "face-detection",
+    "threejs"
+  ],
+  "author": "",
+  "license": "ISC"
+}

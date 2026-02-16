@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>WebAR Face Roulette</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- MediaPipe dependencies (Global scope) -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js" crossorigin="anonymous"></script>
+    <!-- We'll handle camera manually for better control, but let's include utils just in case -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script> -->
+</head>
+
+<body>
+    <div id="app-container">
+        <!-- The video is processed but usually hidden or drawn behind. 
+             Since we do AR, we draw the video feed on the canvas background or a plane. 
+             However, checking requirements: "Attach a circular ring... around the detected head".
+             Ideally we see the user's face. 
+             So we need to render the camera feed. 
+             Three.js can use video as background texture, or we can just overlay canvas on video.
+             Overlay canvas on video is cheaper and faster for mobile than texture upload every frame.
+             Let's use Video element + Canvas overlay.
+        -->
+        <video id="input-video" playsinline muted autoplay></video>
+        <canvas id="output-canvas"></canvas>
+
+        <!-- UI Overlay -->
+        <div id="ui-layer">
+            <div id="loading-overlay" class="hidden">
+                <div class="spinner"></div>
+                <p>Loading models...</p>
+            </div>
+
+            <div id="start-screen" class="hidden">
+                <h1>Face Roulette</h1>
+                <p>Find out which number you are!</p>
+                <button id="btn-start" class="primary-btn">Start Camera</button>
+            </div>
+
+            <div id="game-ui" class="hidden">
+                <div id="instruction-text">Position face in frame</div>
+                <button id="btn-spin" class="primary-btn" disabled>Spin</button>
+            </div>
+
+            <div id="result-ui" class="hidden">
+                <div class="result-actions">
+                    <button id="btn-capture" class="secondary-btn">📸 Save</button>
+                    <button id="btn-retry" class="secondary-btn">🔄 Retry</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import Map -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
+    </script>
+
+    <!-- Main Entry -->
+    <script type="module" src="./src/main.js"></script>
+</body>
+
+</html>
