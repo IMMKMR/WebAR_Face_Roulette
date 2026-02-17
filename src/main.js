@@ -3,6 +3,8 @@ import * as THREE from 'three';
 import { FaceTracker } from './faceTracker.js';
 import { RingSystem } from './ringSystem.js';
 import { SpinLogic } from './spinLogic.js';
+import { ConfettiSystem } from './confettiSystem.js';
+import { OccluderSystem } from './occluderSystem.js';
 
 // ---- CONFIG ----
 const CAMERA_Z = 10;
@@ -50,6 +52,8 @@ scene.add(dirLight);
 // ---- SYSTEMS ----
 const ringSystem = new RingSystem(scene);
 const spinLogic = new SpinLogic(4); // 4 images
+const confettiSystem = new ConfettiSystem(scene);
+const occluderSystem = new OccluderSystem(scene);
 const faceTracker = new FaceTracker(videoElement);
 
 // ---- HELPERS ----
@@ -110,6 +114,10 @@ function onRoundComplete(index) {
     gameUI.classList.add('hidden');
     resultUI.classList.remove('hidden');
     ringSystem.highlight(index);
+
+    // Trigger confetti burst with the winning index
+    // Confetti System now handles loading the correct texture based on index
+    confettiSystem.burst(index, currentHeadMatrix);
 }
 
 // ---- UI HANDLERS ----
@@ -232,11 +240,16 @@ function initLoop() {
         // Update Physics (swaps index)
         const currentIndex = spinLogic.update(dt);
 
-        // Update Overlay
+        // Update Confetti
+        confettiSystem.update(dt);
+
+        // Update Overlay & Occluder
         if (hasFace) {
             ringSystem.update(currentIndex, currentHeadMatrix);
+            occluderSystem.update(currentHeadMatrix);
         } else {
             ringSystem.update(-1, null);
+            occluderSystem.update(null);
         }
 
         // Check if stopped
