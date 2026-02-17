@@ -20,7 +20,8 @@ export class RingSystem {
         this.textureCount = baseImages.length;
 
         for (let i = 0; i < this.textureCount; i++) {
-            const tex = loader.load(`assets/${baseImages[i]}`);
+            // Add a timestamp to force fresh load (Cache Busting)
+            const tex = loader.load(`assets/${baseImages[i]}?v=${new Date().getTime()}`);
             tex.colorSpace = THREE.SRGBColorSpace; // Ensure correct color
             this.textures.push(tex);
         }

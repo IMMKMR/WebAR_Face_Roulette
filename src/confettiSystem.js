@@ -10,8 +10,9 @@ export class ConfettiSystem {
         // Load Confetti Textures
         this.textures = [];
         const loader = new THREE.TextureLoader();
+        const version = new Date().getTime(); // Cache buster
         for (let i = 1; i <= 4; i++) {
-            this.textures.push(loader.load(`assets/confetti${i}.png`));
+            this.textures.push(loader.load(`assets/confetti${i}.png?v=${version}`));
         }
     }
 
